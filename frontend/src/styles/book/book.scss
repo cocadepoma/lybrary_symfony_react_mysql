@@ -1,0 +1,91 @@
+.bookthumb__book-main-wrapper {
+    background-color: rgba(255, 255, 255, 0.63);
+    border-radius: 15px;
+    column-gap: 1rem;
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 87% 13%;
+    margin-bottom: 3rem;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow 0.3s ease-in-out;
+    -webkit-box-shadow: 0px 7px 14px -1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 7px 14px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 7px 14px -1px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        -webkit-box-shadow: 0px 7px 14px -1px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 0px 7px 14px -1px rgba(0, 0, 0, 0.4);
+        box-shadow: 0px 7px 14px -1px rgba(0, 0, 0, 0.4);
+
+        .bookthumb__button {
+            opacity: 1;
+        }
+    }
+
+    .bookthumb__book-content-wrapper {
+        padding: 1rem;
+        text-transform: uppercase;
+
+        .bookthumb__book-title {
+            color: rgb(157, 210, 0);
+            font-size: 1rem;
+        }
+
+        .bookthumb__book-description {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .bookthumb__button {
+        z-index: 100;
+        opacity: 0;
+        position: absolute;
+        right: 0.8rem;
+        top: 0.2rem;
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    .bookthumb__book-main-wrapper {
+
+        .bookthumb__book-content-wrapper {
+            padding: 0.5rem;
+
+            .bookthumb__book-title {
+                color: rgb(157, 210, 0);
+                font-size: 1.2rem;
+            }
+
+            .bookthumb__book-description {
+                font-size: 1.2rem;
+                margin-top: 0.5rem;
+            }
+        }
+    }
+
+}
+
+@media (min-width: 992px) {
+
+    .bookthumb__book-main-wrapper {
+        grid-template-rows: 1fr 8rem;
+
+        .bookthumb__book-image-wrapper {
+            img {
+                max-height: 27rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .bookthumb__book-main-wrapper {
+        grid-template-rows: 1fr 9rem;
+    }
+
+}

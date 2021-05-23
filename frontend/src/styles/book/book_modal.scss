@@ -1,0 +1,97 @@
+.ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, 0.479) !important;
+    opacity: 0;
+    transition: opacity 350ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+    opacity: 0;
+}
+
+
+.modal {
+
+    background: rgba(76, 1, 80, 0.913);
+    border-radius: 15px;
+    color: rgb(252, 252, 252);
+    font-size: 0.9rem;
+    left: 50%;
+    max-height: 90%;
+    width: 95%;
+    overflow-y: auto;
+    top: 50%;
+    padding: 1rem;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.41);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.41);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.41);
+
+    h2 {
+        font-size: 2.2rem;
+        font-weight: 100;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    form {
+
+        input {
+            background: rgb(255, 255, 255);
+            border: 2px solid transparent;
+            border-bottom: 2px solid rgb(166, 211, 0);
+            border-radius: 1px;
+            color: rgba(0, 0, 0, 0.692);
+            font-size: 0.9rem;
+            letter-spacing: 0.8px;
+            outline: none;
+            padding: 0.3rem;
+            width: 100%;
+
+            &:disabled {
+                background: rgb(193, 193, 193);
+                color: rgba(0, 0, 0, 0.377);
+            }
+        }
+
+        .modal__grid-1 {
+            align-items: center;
+            display: grid;
+            grid-template-columns: 7rem 1fr;
+            margin-bottom: 1rem;
+        }
+
+        .modal__buttons-wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .modal {
+        max-width: 60rem;
+        font-size: 1.4rem;
+        padding: 2rem;
+
+        form {
+            input {
+                padding: 0.7rem;
+                font-size: 1.4rem;
+            }
+
+            .modal__grid-1 {
+                grid-template-columns: 11rem 1fr;
+            }
+
+            .modal__buttons-wrapper {
+                margin-top: 4rem;
+            }
+        }
+    }
+}
