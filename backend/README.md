@@ -1,5 +1,3 @@
-
-
 ## Run Symfony API LOCAL
 
 1. Create the DB and import the file attached.
@@ -35,4 +33,5 @@
 - `/api/library/getimage` -> return the images of a book.
   
 - `/api/library/addimage` -> **params**: book_isbn, url. Add a new image url to DB.
-  
+
+- `/api/library/removeimage` -> **params**: id. Remove image from DB.
