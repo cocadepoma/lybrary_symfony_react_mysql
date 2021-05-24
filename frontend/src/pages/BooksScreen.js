@@ -12,6 +12,7 @@ import { uiOpenModal } from '../actions/ui.actions';
 import { BookModal } from '../components/book/BookModal';
 import { fetchApi } from '../helpers/fetch';
 import { ToastSuccess } from '../components/toasts/ToastSuccess';
+import { getBooksWithImages } from '../helpers/books.helpers';
 
 export const BooksScreen = () => {
 
@@ -25,10 +26,6 @@ export const BooksScreen = () => {
             setActiveBooks([...books]);
         }
     }, [books]);
-
-    const handleAddBook = () => {
-        dispatch(uiOpenModal());
-    }
 
     const handleStartDeleteBook = (isbn, title) => {
 
@@ -50,6 +47,9 @@ export const BooksScreen = () => {
         dispatch(startRemoveBook(isbn))
     }
 
+    const handleAddBook = () => {
+        dispatch(uiOpenModal());
+    }
     const handleAddFromJson = async () => {
         const resp = await fetchApi(`library/addfromjson`, undefined, 'POST');
         const data = await resp.json();
@@ -65,7 +65,8 @@ export const BooksScreen = () => {
         const data = await resp.json();
 
         if (data.ok) {
-            setActiveBooks([...data.data]);
+            const books = await getBooksWithImages(data.data);
+            setActiveBooks([...books]);
         }
     }
 
@@ -74,7 +75,8 @@ export const BooksScreen = () => {
         const data = await resp.json();
 
         if (data.ok) {
-            setActiveBooks([...data.data]);
+            const books = await getBooksWithImages(data.data);
+            setActiveBooks([...books]);
         }
     }
 
@@ -85,8 +87,8 @@ export const BooksScreen = () => {
     }
 
     return (
-        <div className="container">
-            <h1 className="bookscreen__h1">My Library</h1>
+        <div className="mb-3 container">
+            <h1 className="bookscreen__h1">React Library</h1>
             <div className="bookscreen__books-main-wrapper">
                 {
                     activeBooks && activeBooks.length > 0
@@ -108,7 +110,7 @@ export const BooksScreen = () => {
                 <div className="bookscreen__tab-wrapper tab-2">
                     <div className="bookscreen__tab-new-book" onClick={handleAddFromJson}>
                         <i className="fas fa-book"></i>
-                        <span>Add JSON</span>
+                        <span>Import JSON</span>
                     </div>
                 </div>
 
@@ -129,7 +131,7 @@ export const BooksScreen = () => {
                 <div className="bookscreen__tab-wrapper tab-5">
                     <div className="bookscreen__tab-new-book" onClick={handleResetBooks}>
                         <i className="fas fa-book"></i>
-                        <span>Reset</span>
+                        <span>All</span>
                     </div>
                 </div>
 

@@ -4,14 +4,8 @@
 
 In the project directory, you can run:
 
-
 ### 1 - `npm install`
 Install node modules
-
-### 2 - `Change your ENDPOINT`
-Change from `.env` file the endpoint of the API.
-
-`REACT_APP_URL=http://127.0.0.1:8000/api`
 
 ### 2 - `npm start`
 

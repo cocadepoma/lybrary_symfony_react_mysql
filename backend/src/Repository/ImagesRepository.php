@@ -20,6 +20,17 @@ class ImagesRepository extends ServiceEntityRepository
     }
 
     
+    public function findImagesById($entityManager, $id = ""): Array
+    {
+        $query = $entityManager->createQuery(
+            'SELECT img
+            FROM App\Entity\Images img
+            WHERE img.id = :id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
+    }
+
     public function findImagesByBookId($entityManager, $id = ""): Array
     {
         $query = $entityManager->createQuery(
@@ -36,6 +47,16 @@ class ImagesRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'DELETE FROM App\Entity\Images img
             WHERE img.bookId = :id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
+    }
+
+    public function removeImageById($entityManager, $id = ""): Int
+    {
+        $query = $entityManager->createQuery(
+            'DELETE FROM App\Entity\Images img
+            WHERE img.id = :id'
         )->setParameter('id', $id);
 
         return $query->getResult();

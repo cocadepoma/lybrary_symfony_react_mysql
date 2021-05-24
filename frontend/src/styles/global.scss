@@ -1,7 +1,10 @@
 html {
     box-sizing: border-box;
     font-size: 62.5%;
-    background: rgba(23, 0, 20, 0.219);
+    background: linear-gradient(117deg, #5f5d3a, #f9fac3);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
 }
 
 *,
@@ -21,6 +24,24 @@ body {
     line-height: 1.5;
     margin: 0;
     padding: 0;
+    height: 100%;
+}
+
+footer {
+    background-color: rgba(84, 84, 0, 0.452);
+    padding: 2rem;
+
+    a {
+        color: white;
+        display: block;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.2s ease-in;
+
+        &:hover {
+            color: rgb(196, 235, 0);
+        }
+    }
 }
 
 img {
@@ -44,6 +65,12 @@ h4 {
 }
 
 /* CUSTOM HELPERS */
+#root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
 .container {
     margin: 0 auto;

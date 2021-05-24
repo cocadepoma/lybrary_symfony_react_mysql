@@ -2,9 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { uiOpenModal } from '../actions/ui.actions';
+
 import { BookImageModal } from '../components/book/BookImageModal';
+import { ToastContainer, toast } from 'react-toastify';
+import moment from 'moment';
+
 import { getBookByIsbn } from '../helpers/books.helpers';
-import { ToastContainer } from 'react-toastify';
+import { fetchApi } from '../helpers/fetch';
+import { ModalToastify } from '../components/toasts/ModalToastify';
+import { updateBook } from '../actions/book.actions';
+import { ToastSuccess } from '../components/toasts/ToastSuccess';
+
 
 const initialState = {
     isbn: '',
@@ -46,6 +54,47 @@ export const BookScreen = () => {
         dispatch(uiOpenModal());
     }
 
+    const handleImageClick = (id) => {
+
+        const message = `Are you sure about deleting the image`;
+
+        toast.warn(<ModalToastify
+            handleDeleteItem={() => handleDeleteImage(id)}
+            message={message} />,
+            {
+                position: toast.POSITION.TOP_CENTER,
+                closeOnClick: false,
+                autoClose: false,
+                toastId: '1'
+            });
+    }
+
+    const handleDeleteImage = async (id) => {
+
+        if (id) {
+
+            const resp = await fetchApi(`library/removeimage?id=${id}`);
+            const data = await resp.json();
+
+            if (data.ok) {
+                toast.success(<ToastSuccess text="Image removed successfully!" />);
+                let newImages = [];
+                newImages = bookActive?.images.filter(image => image.id !== id);
+
+                setBookActive({
+                    ...bookActive,
+                    images: newImages
+                });
+
+                dispatch(updateBook({
+                    ...bookActive,
+                    images: newImages
+                }));
+            }
+        }
+    }
+
+
     return (
         <>
             {!modalOpen && <ToastContainer />}
@@ -53,7 +102,7 @@ export const BookScreen = () => {
 
             {
                 bookActive && <div className="container">
-                    <h1 className="bookscreen__h1">{bookActive.title}</h1>
+                    <h1 className="bookscreen__h1 mb-1">{bookActive.title}</h1>
 
                     <div className="book__wrapper-go-back">
                         <div className="book__go-back" onClick={() => history.goBack()}>
@@ -87,22 +136,40 @@ export const BookScreen = () => {
                                 <p>{bookActive.subtitle}</p>
                                 <p><span className="bold">ISBN: </span>{bookActive.isbn}</p>
                                 <p><span className="bold">Author: </span>{bookActive.author}</p>
-                                <p><span className="bold">Published: </span>{bookActive.published}</p>
+                                <p><span className="bold">Published: </span>{moment(bookActive.published).format("Do MMM YYYY")}</p>
                                 <p><span className="bold">Publisher: </span>{bookActive.publisher}</p>
                                 <p><span className="bold">Pages: </span>{bookActive.pages}</p>
                                 <p><span className="bold">Description: </span>{bookActive.description}</p>
                                 <p><span className="bold">Website: </span><a href={bookActive.website} target="_blank" rel="noreferrer">Link</a></p>
                                 <p><span className="bold">Category: </span>{bookActive.category}</p>
-                                <p><span className="bold">Images: </span>This book has {bookActive?.images && bookActive.images.length > 0 ? `${bookActive.images.length}` : 0} images</p>
                             </div>
                         </div>
 
+                        <div className="book__books-images-wrapper">
+                            <p className="bold">Images: </p>
 
+                            <div className="book__books-grid-images">
+                                {
+                                    bookActive && bookActive?.images && bookActive.images.length > 0
+                                    &&
+                                    bookActive.images.map((image, i) => i > 0
+                                        &&
+                                        <div key={image.id} className="book__thumb-image">
+                                            <img
+                                                src={image.url}
+                                                alt="cover-book"
+                                            />
+                                            <div className="filter">
+                                                <span><i className="fas fa-times" onClick={() => handleImageClick(image.id)}></i></span>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
-
         </>
-
     )
 }

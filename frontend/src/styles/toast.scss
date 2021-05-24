@@ -3,7 +3,8 @@
 }
 
 .Toastify__toast--warning {
-    background-color: rgba(111, 0, 102, 0.961) !important;
+    background-color: rgba(249, 247, 249, 0.961) !important;
+    border: 3px solid rgb(153, 176, 1);
     height: 120px;
     width: 335px;
     -webkit-box-shadow: 2px 3px 10px 4px rgba(0, 0, 0, 0.5);
@@ -14,7 +15,7 @@
         width: 100%;
 
         .toast-wrapper-container {
-            color: rgb(255, 255, 255);
+            color: rgb(6, 6, 6);
             font-size: 1.2rem;
             display: flex;
             flex-direction: column;

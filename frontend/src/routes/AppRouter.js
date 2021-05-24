@@ -19,7 +19,7 @@ export const AppRouter = () => {
 
     return (
         <Router basename='/' >
-            <div>
+            <div className="root-child">
                 <Switch>
 
                     <Route exact path="/" component={BooksScreen} />
@@ -28,6 +28,13 @@ export const AppRouter = () => {
 
                 </Switch>
             </div>
+            <footer>
+                <a
+                    href="https://francisco-rodriguez.site/"
+                    target="_blank"
+                    rel="noreferrer">Francisco Rodríguez 2021 &copy;
+                    </a>
+            </footer>
         </Router>
     )
 }

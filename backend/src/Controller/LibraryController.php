@@ -198,7 +198,7 @@ class LibraryController extends AbstractController
         }
     }
 
-
+    
     /**
     * @Route("/api/library/remove", name="book_remove_by_isbn")
     */
@@ -432,6 +432,61 @@ class LibraryController extends AbstractController
         }
     }
 
+    /**
+    * @Route("/api/library/removeimage", name="image_remove_by_isbn")
+    */
+    public function removeImage(Request $request) 
+    {
+
+        $helper = new CustomHelpers();
+        $id = $request->get('id');
+        $response = new JsonResponse();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
+        if(empty($id)) {
+
+            $response->setData([
+                'ok' => false,
+                'error' => "Image id is mandatory"
+            ]);
+
+            return $response;
+        }
+
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+            $resultImages = $this->getDoctrine()->getRepository(Images::class)->findImagesById($entityManager, $id);
+           
+            if(count($resultImages) == 0) {
+
+                $response->setData([
+                    'ok' => false,
+                    'error' => "The image with the id: $id, does not exists"
+                ]);
+
+                return $response;
+            }
+
+            $this->getDoctrine()->getRepository(Images::class)->removeImageById($entityManager, $id);
+
+            $response->setData([
+                'ok' => true,
+                "image" => "Image with the id $id removed"
+            ]);
+
+            return $response;
+
+        } catch (\Exception $e) {
+
+            $response->setData([
+                'ok' => false,
+                'error' => $e->getMessage()
+            ]);
+            return $response;
+        }
+    }
+    
     /**
     * @Route("/api/library/getimage", name="get_image_by_book_id")
     */

@@ -4,6 +4,7 @@ import { types } from "../types/types";
 import { toast } from 'react-toastify';
 import { ToastSuccess } from "../components/toasts/ToastSuccess";
 import { ToastError } from "../components/toasts/ToastError";
+import { getBooksWithImages } from "../helpers/books.helpers";
 
 
 export const startLoadingBooks = () => {
@@ -19,23 +20,7 @@ export const startLoadingBooks = () => {
             if (data.ok) {
 
                 const { books } = data;
-                const booksWithImage = await Promise.all(
-
-                    books.map(async book => {
-                        const { id } = book;
-                        const resp = await fetchApi(`library/getimage?id=${id}`);
-                        const data = await resp.json();
-
-                        if (data.ok) {
-                            return {
-                                ...book,
-                                images: [...data.data]
-                            }
-                        } else {
-                            return book;
-                        }
-                    })
-                );
+                const booksWithImage = await getBooksWithImages(books);
 
                 dispatch(loadBooks(booksWithImage));
 
@@ -84,6 +69,11 @@ export const startAddBook = (book) => {
 
 const addBook = (book) => ({
     type: types.addBook,
+    payload: book
+});
+
+export const updateBook = (book) => ({
+    type: types.updateBook,
     payload: book
 });
 
